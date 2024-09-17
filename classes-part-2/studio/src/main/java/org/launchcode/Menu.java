@@ -1,32 +1,68 @@
 package org.launchcode;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 public class Menu {
-    private Date lastUpdated;
-    private ArrayList<MenuItem> items;
 
-    public Menu(Date d, ArrayList<MenuItem> i) {
-        this.lastUpdated = d;
-        this.items = i;
+    private ArrayList<MenuItem> menuItems = new ArrayList<>();
+private LocalDate lastUpdated;
+
+
+public ArrayList<MenuItem> getMenuItems() {
+    return menuItems;
+}
+
+
+@Override
+    public String toString() {
+    StringBuilder appetizers = new StringBuilder();
+    for (MenuItem item : menuItems) {
+        if (item.getCategory().equals("appetizer")) {
+            appetizers.append("\n").append(item.toString()).append("\n");
+        }
+    }
+    StringBuilder mainCourse = new StringBuilder();
+    for (MenuItem item : menuItems) {
+        if (item.getCategory().equals("main course")) {
+            mainCourse.append("\n").append(item.toString()).append("\n");
+        }
+    }
+    StringBuilder dessert = new StringBuilder();
+    for (MenuItem item : menuItems) {
+        if (item.getCategory().equals("dessert")) {
+            dessert.append("\n").append(item.toString()).append("\n");
+        }
+    }
+    return "\nPanda Hut Menu\n" + "\n" +
+            "Appetizers" + appetizers.toString() + "\n" +
+            "Main Course" + mainCourse.toString() + "\n" +
+            "Desserts" + dessert.toString() + "\n";
+}
+
+void  addItem(MenuItem newitem) {
+    String message = "That item is already on the menu.";
+    if (menuItems.contains(newitem)) {
+        System.out.println(message);
+        return;
+    }
+    for (MenuItem item : menuItems) {
+        if (item.equals(newitem)) {
+            System.out.println(message);
+            return;
+        }
+
     }
 
-    public void setLastUpdated(Date lastUpdated) {
-        this.lastUpdated = lastUpdated;
+    menuItems.add(newitem);
+    lastUpdated= LocalDate.now();
+}
+    void removeItem(MenuItem item) {
+        menuItems.remove(item);
+        lastUpdated = LocalDate.now();
     }
 
-    public void setItems(ArrayList<MenuItem> items) {
-        this.items = items;
-    }
-
-    public Date getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public ArrayList<MenuItem> getItems() {
-        return items;
-    }
 }
 
 
